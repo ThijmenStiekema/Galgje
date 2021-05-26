@@ -5,7 +5,8 @@ import random
 
 def game():
   woord = random.choice(words)
-  print(woord)
+  lengte = len(woord)
+  print("_ "*lengte)
 
 game()
 
