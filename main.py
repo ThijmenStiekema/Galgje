@@ -11,8 +11,10 @@ fouten = 0
 
 
 def kiezen():
-    #Checkt of de speler game over is en herstart de game
-  global fouten  
+  print(*gecodeerd_woord)
+  #Checkt of de speler game over is en herstart de game
+  global fouten
+  
   if fouten == 12:
     fouten = 0
     print("Game Over")
@@ -20,9 +22,10 @@ def kiezen():
     game()
   
   else:
+    #print gekozen letters
     print("Al gekozen letters:") 
     print(*al_gekozen_letters)
-
+    print()
     gekozen_letter = input("kies een letter: ")
     if gekozen_letter in al_gekozen_letters:
       print("Letter is al gekozen")
@@ -36,10 +39,11 @@ def kiezen():
       while index < len(woord):
         index = woord.find(gekozen_letter, index)
         if index == -1:
-            break
-        print(index)
+          break
         index += 1
+        gecodeerd_woord[index-1] = gekozen_letter
       print("Goed gedaan!")
+      
       kiezen()
 
     elif gekozen_letter.isalpha():
@@ -49,7 +53,7 @@ def kiezen():
       kiezen() 
   
     else: 
-      print ("Antwoord is niet een letter of woord")
+      print ("Antwoord is niet een letter of woord\n")
       kiezen()
 
 def game():
@@ -57,7 +61,8 @@ def game():
   #Kiest woord en zet streepjes neer
   woord = random.choice(words)
   lengte = len(woord)
-  print("_ " * lengte)
+  global gecodeerd_woord
+  gecodeerd_woord = ["_ "] * lengte
   global al_gekozen_letters
   al_gekozen_letters = []
   
@@ -66,3 +71,4 @@ def game():
 game()
 #Start de game
 
+      
