@@ -7,23 +7,27 @@ import random
 goede_letters = 0
 fouten = 0 
 
-
 def game():
+  #Lost problemen op
   global goede_letters
-  goede_letters = 0
   global woord
-  #Kiest woord en zet streepjes neer
-  woord = random.choice(words)
   global lengte
-  lengte = len(woord)
   global gecodeerd_woord
-  gecodeerd_woord = ["_ "] * lengte
   global al_gekozen_letters
+
+  #Zet belangrijke variable en lijsten (terug) naar 0
+  goede_letters = 0
   al_gekozen_letters = []
+
+  #Kiest woord
+  woord = random.choice(words)
+  lengte = len(woord)
+
+  gecodeerd_woord = ["_ "] * lengte
   kiezen()
 
 def kiezen():
-  print()
+  #Zet gecodeerd woord neer
   print(*gecodeerd_woord)
   #Checkt of de speler game over is en herstart de game
   global fouten
@@ -36,17 +40,27 @@ def kiezen():
 
   else:
     #print gekozen letters
-    print("Al gekozen letters:") 
+    print("Al gekozen letters of woorden:") 
     print(*al_gekozen_letters)
-
+    #Print hoeveel fouten er zijn gemaakt
     print("fouten: "+ str(fouten))
-    aantal_beurten = 12 - fouten
+    #Print hoeveel beurten de speler nog heeft
+    aantal_beurten = 10 - fouten
     print("aantal beurten over: " + str(aantal_beurten))
-    gekozen_letter = input("kies een letter: ")
+    #Speler kiest letter of woord
+    gekozen_letter = input("kies een letter of woord: ")
+
+    #Als de speler al een woord heeft gekozen word dat geblokeerd
     if gekozen_letter in al_gekozen_letters:
-      print("Letter is al gekozen")
+      print("Letter is al gekozen \n")
       kiezen()
-    #
+    #De speler wint als hij het woord invult
+    elif gekozen_letter.lower() == woord:
+      print("je hebt het geraden! Het woord was: " + woord)
+      input("Druk op enter om nog een keer te spelen \n")
+      fouten = 0
+      game()
+    #De speler krijgt een punt als hij een letter raad
     elif gekozen_letter.lower() in woord and gekozen_letter.isalpha():
       al_gekozen_letters.append(gekozen_letter)
       print("Goed gedaan")
@@ -58,26 +72,25 @@ def kiezen():
           break
         index += 1
         gecodeerd_woord[index-1] = gekozen_letter
-
+      #Laat de speler winnen als alle letters zijn geraden
       if gecodeerd_woord.count("_ ") == 0:
         print("je hebt het geraden! Het woord was: " + woord)
-        print("GG\n")
-        input("press enter to continue \n")
-        
+        input("Druk enter om nog een keer te spelen \n")
         fouten = 0
         game()
       else:
         kiezen()
-    #voegt een fout toe als de gekozen letter fout is
+    
     elif gekozen_letter.isalpha():
+      #voegt een fout toe als de gekozen letter fout is
       al_gekozen_letters.append(gekozen_letter)
       print("Fout")
       fouten += 1
       kiezen() 
-  
+    #Blokeert antwoorden die geen letterz zijn
     else: 
       print ("Antwoord is niet een letter of woord\n")
       kiezen()
 
-game()
 #Start de game
+game()
