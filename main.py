@@ -5,7 +5,8 @@ words = ["informatica","informatiekunde","spelletje","aardigheidje","scholier","
 import random
 
 goede_letters = 0
-fouten = 0
+fouten = 0 
+
 
 def game():
   global goede_letters
@@ -21,14 +22,15 @@ def game():
   al_gekozen_letters = []
   kiezen()
 
-
 def kiezen():
+  print()
   print(*gecodeerd_woord)
   #Checkt of de speler game over is en herstart de game
   global fouten
   if fouten == 12:
     fouten = 0
     print("Game Over")
+    print("Het woord was: " + woord + "\n")
     input("press enter to continue ")
     game()
 
@@ -36,15 +38,18 @@ def kiezen():
     #print gekozen letters
     print("Al gekozen letters:") 
     print(*al_gekozen_letters)
+
     print("fouten: "+ str(fouten))
+    aantal_beurten = 12 - fouten
+    print("aantal beurten over: " + str(aantal_beurten))
     gekozen_letter = input("kies een letter: ")
     if gekozen_letter in al_gekozen_letters:
       print("Letter is al gekozen")
       kiezen()
-
+    #
     elif gekozen_letter.lower() in woord and gekozen_letter.isalpha():
       al_gekozen_letters.append(gekozen_letter)
-
+      print("Goed gedaan")
       #Geeft de locatie van de letters in het woord aan
       index = 0
       while index < len(woord):
@@ -53,15 +58,17 @@ def kiezen():
           break
         index += 1
         gecodeerd_woord[index-1] = gekozen_letter
-      print("Goed gedaan!")
+
       if gecodeerd_woord.count("_ ") == 0:
-        print("GG")
-        input("press enter to continue ")
-        print(woord)
+        print("je hebt het geraden! Het woord was: " + woord)
+        print("GG\n")
+        input("press enter to continue \n")
+        
+        fouten = 0
         game()
       else:
         kiezen()
-      
+    #voegt een fout toe als de gekozen letter fout is
     elif gekozen_letter.isalpha():
       al_gekozen_letters.append(gekozen_letter)
       print("Fout")
