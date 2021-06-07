@@ -1,6 +1,20 @@
 #woorden waar die kunnen worden gekozen
 words = ["informatica","informatiekunde","spelletje","aardigheidje","scholier","fotografie","waardebepaling","specialiteit","verzekering","universiteit","heesterperk"]
 
+#Lijst met tekeningetjes van galgjes
+Galgjes = [
+  " \n\n\n\n\n", 
+  " \n\n\n\n\n_______", 
+  "\n| \n| \n| \n| \n|______", 
+  "____ \n|   | \n|    \n|    \n|      \n|______", 
+  "____ \n|   | \n|   o \n|    \n|      \n|______", 
+  "____ \n|   | \n|   o \n|   | \n|      \n|______",
+  "____ \n|   | \n|   o \n|  /| \n|      \n|______",
+  "____ \n|   | \n|   o \n|  /|\ \n|      \n|______",
+  "____ \n|   | \n|   o \n|  /|\ \n|    \n|______",
+  "____ \n|   | \n|   o \n|  /|\ \n|  /  \n|______", 
+  "____ \n|   | \n|   o \n|  /|\ \n|  / \  \n|______"]
+
 #import random module package 
 import random
 
@@ -14,11 +28,12 @@ def game():
   global lengte
   global gecodeerd_woord
   global al_gekozen_letters
+  
 
   #Zet belangrijke variable en lijsten (terug) naar 0
   goede_letters = 0
   al_gekozen_letters = []
-
+  
   #Kiest woord
   woord = random.choice(words)
   lengte = len(woord)
@@ -27,11 +42,14 @@ def game():
   kiezen()
 
 def kiezen():
+  global fouten
+  #Print de tekeningetjes van het galgje gebaseerd op hoeveel fouten er zijn
+  print(Galgjes[fouten])
+  print()
   #Zet gecodeerd woord neer
   print(*gecodeerd_woord)
-  #Checkt of de speler game over is en herstart de game
-  global fouten
-  if fouten == 12:
+  #Checkt of de speler te veel fouten heeft en eindigd de game als dit zo is
+  if fouten == 10:
     fouten = 0
     print("Game Over")
     print("Het woord was: " + woord + "\n")
@@ -39,9 +57,12 @@ def kiezen():
     game()
 
   else:
-    #print gekozen letters
+    #print gekozen letters en zet ze op alphabetische volgoorde
     print("Al gekozen letters of woorden:") 
+    
+    al_gekozen_letters.sort()
     print(*al_gekozen_letters)
+    
     #Print hoeveel fouten er zijn gemaakt
     print("fouten: "+ str(fouten))
     #Print hoeveel beurten de speler nog heeft
@@ -57,13 +78,14 @@ def kiezen():
     #De speler wint als hij het woord invult
     elif gekozen_letter.lower() == woord:
       print("je hebt het geraden! Het woord was: " + woord)
-      input("Druk op enter om nog een keer te spelen \n")
+      print()
+      input("Druk op enter om nog een keer te spelen")
       fouten = 0
       game()
     #De speler krijgt een punt als hij een letter raad
     elif gekozen_letter.lower() in woord and gekozen_letter.isalpha():
       al_gekozen_letters.append(gekozen_letter)
-      print("Goed gedaan")
+      print("Goed gedaan\n")
       #Geeft de locatie van de letters in het woord aan
       index = 0
       while index < len(woord):
@@ -75,7 +97,8 @@ def kiezen():
       #Laat de speler winnen als alle letters zijn geraden
       if gecodeerd_woord.count("_ ") == 0:
         print("je hebt het geraden! Het woord was: " + woord)
-        input("Druk enter om nog een keer te spelen \n")
+        print()
+        input("Druk enter om nog een keer te spelen")
         fouten = 0
         game()
       else:
@@ -84,7 +107,7 @@ def kiezen():
     elif gekozen_letter.isalpha():
       #voegt een fout toe als de gekozen letter fout is
       al_gekozen_letters.append(gekozen_letter)
-      print("Fout")
+      print("Fout \n")
       fouten += 1
       kiezen() 
     #Blokeert antwoorden die geen letterz zijn
