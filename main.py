@@ -42,7 +42,7 @@ def game():
   #Kiest woord
   woord = random.choice(words)
   lengte = len(woord)
-  
+
   #Zet streepjes neer
   gecodeerd_woord = ["_ "] * lengte
   kiezen()
@@ -60,16 +60,16 @@ def kiezen():
   #Checkt of de speler te veel fouten heeft en eindigd de game als dit zo is
   if fouten == 10:
     fouten = 0
-    print("Game Over")
+    print("\nGame Over")
     print("Het woord was: " + woord + "\n")
     einde()
 
   else:
     #Print gekozen letters en zet ze op alphabetische volgoorde
-    print("Al gekozen letters of woorden:") 
+    print()
+    print("Al gekozen foute letters of woorden:") 
     al_gekozen_letters.sort()
     print(*al_gekozen_letters)
-
     #Print hoeveel fouten er zijn gemaakt
     print("fouten: "+ str(fouten))
 
@@ -95,7 +95,6 @@ def kiezen():
 
     #De speler krijgt een punt als hij een letter raad
     elif gekozen_letter in woord and gekozen_letter.isalpha():
-      al_gekozen_letters.append(gekozen_letter)
       cls()
       print("Goed gedaan\n")
       #Geeft de locatie van de letters in het woord aan
@@ -106,7 +105,7 @@ def kiezen():
           break
         index += 1
         gecodeerd_woord[index-1] = gekozen_letter
-
+      
       #Laat de speler winnen als alle letters zijn geraden
       if gecodeerd_woord.count("_ ") == 0:
         print("je hebt het geraden! Het woord was: " + woord)
