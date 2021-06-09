@@ -37,7 +37,7 @@ def game():
   #Kiest woord
   woord = random.choice(words)
   lengte = len(woord)
-
+  #Zet streepjes
   gecodeerd_woord = ["_ "] * lengte
   kiezen()
 
@@ -53,8 +53,7 @@ def kiezen():
     fouten = 0
     print("Game Over")
     print("Het woord was: " + woord + "\n")
-    input("press enter to continue ")
-    game()
+    einde()
 
   else:
     #print gekozen letters en zet ze op alphabetische volgoorde
@@ -69,21 +68,19 @@ def kiezen():
     aantal_beurten = 10 - fouten
     print("aantal beurten over: " + str(aantal_beurten))
     #Speler kiest letter of woord
-    gekozen_letter = input("kies een letter of woord: ")
-
+    oude_gekozen_letter = input("kies een letter of woord: ")
+    gekozen_letter = oude_gekozen_letter.lower()
     #Als de speler al een woord heeft gekozen word dat geblokeerd
     if gekozen_letter in al_gekozen_letters:
       print("Letter is al gekozen \n")
       kiezen()
     #De speler wint als hij het woord invult
-    elif gekozen_letter.lower() == woord:
+    elif gekozen_letter == woord:
       print("je hebt het geraden! Het woord was: " + woord)
       print()
-      input("Druk op enter om nog een keer te spelen")
-      fouten = 0
-      game()
+      einde()
     #De speler krijgt een punt als hij een letter raad
-    elif gekozen_letter.lower() in woord and gekozen_letter.isalpha():
+    elif gekozen_letter in woord and gekozen_letter.isalpha():
       al_gekozen_letters.append(gekozen_letter)
       print("Goed gedaan\n")
       #Geeft de locatie van de letters in het woord aan
@@ -98,9 +95,7 @@ def kiezen():
       if gecodeerd_woord.count("_ ") == 0:
         print("je hebt het geraden! Het woord was: " + woord)
         print()
-        input("Druk enter om nog een keer te spelen")
-        fouten = 0
-        game()
+        einde()
       else:
         kiezen()
     
@@ -110,10 +105,23 @@ def kiezen():
       print("Fout \n")
       fouten += 1
       kiezen() 
-    #Blokeert antwoorden die geen letterz zijn
+    #Blokeert antwoorden die geen letters zijn
     else: 
       print ("Antwoord is niet een letter of woord\n")
       kiezen()
+
+def einde():
+ doorgaan = input("Wil je nog een keer? (y/n)")
+ if doorgaan == "y":
+   doorgaan = 0
+   print()
+   game()
+ elif doorgaan == "n":
+   print("\nBedankt voor het spelen!")
+ else:
+    doorgaan = 0
+    print("Voer y in als je door wil spelen en n in als je wilt stoppen\n")
+    einde()
 
 #Start de game
 game()
