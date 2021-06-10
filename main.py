@@ -28,6 +28,7 @@ fouten = 0
 
 def game():
   #Lost problemen op
+  global fouten
   global goede_letters
   global woord
   global lengte
@@ -38,6 +39,7 @@ def game():
   #Zet belangrijke variable en lijsten (terug) naar 0
   goede_letters = 0
   al_gekozen_letters = []
+  fouten = 0
   
   #Kiest woord
   woord = random.choice(words)
